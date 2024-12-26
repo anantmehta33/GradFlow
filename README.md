@@ -1,6 +1,9 @@
 # GradFlow: A Custom Automatic Differentiation Library and Neural Network Framework
 
-<img src="GradFlow logo.jpeg" alt="GradFlow Logo" width="100"> 
+
+<div align="center">
+  <img src="GradFlow logo.jpeg" alt="GradFlow Logo" width="100"> 
+</div>
 
 GradFlow is a Python library that implements automatic differentiation from scratch. It provides the core building blocks for constructing and training neural networks.
 
