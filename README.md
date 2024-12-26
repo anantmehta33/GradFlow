@@ -1,24 +1,84 @@
-# GradFlow
-Flow of gradients through the computational graph!!!
+# GradFlow: A Custom Automatic Differentiation Library and Neural Network Framework
 
+gradFlow is a Python library that implements automatic differentiation from scratch. It provides the core building blocks for constructing and training neural networks.
 
-### \_\_add\_\_():
-This is known as magic or dunder functions in python where we can redefine inbuilt python function. <br>
-For example:<br>
-result = obj1 + obj2 <br>
-Translates to :<br>
-result = obj1.\_\_add\_\_(obj2)
+## **Key Features:**
 
-### Same for other operations also
+* **Automatic Differentiation:** 
+    * Implements forward and backward pass automatic differentiation using a custom `GradNode` class.
+    * Supports common arithmetic operations, activation functions (ReLU, sigmoid, tanh, etc.), and custom operations.
+* **Neural Network Framework:**
+    * Provides classes for building neural network components:
+        * `Neuron`: Represents a single neuron with weights and biases.
+        * `Layer`: Represents a layer of neurons.
+        * `MLP`: Represents a Multi-Layer Perceptron (MLP) network.
+    * Enables the construction and training of various neural network architectures.
+* **Computational Graph Visualization:** 
+    * Includes functionality to visualize the computational graph of the neural network, aiding in understanding the flow of data and gradients.
 
-### Convention: A single leading underscore (_) indicates that a parameter (or variable) is intended for internal use only and should not be accessed directly from outside the class or module.
+## **Usage:**
 
-### Convention: Use a trailing underscore (var_) rather than a leading underscore to avoid conflicts with Python keywords.
+1. **Define the Computational Graph:**
+   * Create `GradNode` objects to represent variables, constants, and operations.
+   * Connect `GradNode` objects to form the computational graph.
 
-### Concept of Backprop:
-#### First in forward pass all the initial node values are set. <br>
-#### We start the backprop from the last node of the graph -- let this be final node. Now, final.grad() : $\frac{d}{dfinal}final = 1$ <br>
-#### Now, at a node $c$, where $e = c + b$. We need c.grad() will be $\frac{d}{dc}final = \frac{d}{de}final * \frac{d}{dc}e = e.grad() * 1.0$ <br>
-#### If, at a node $c$, where $e = c * b$. We need c.grad() will be $\frac{d}{dc}final = \frac{d}{de}final * \frac{d}{dc}e = e.grad() * b$ <br>
-#### So, essentially for a child.gradient() = parent.gradient() * $\frac{d}{dchild}parent$ <br>
-#### parent._backward() is storing the function to calculate the gradients of children wrt itself.
+2. **Forward Pass:**
+   * Perform the forward pass through the graph by accessing the `data` property of the final node.
+
+3. **Backward Pass:**
+   * Compute gradients for all nodes in the graph by calling the `backward` method of the final node.
+
+4. **Update Parameters:**
+   * Use the computed gradients to update the weights and biases of your neural network using an optimization algorithm (e.g., gradient descent).
+
+* **Magic Methods:** These are special methods in Python (also known as dunder methods) that helps us customize the behavior of built-in operators. 
+    * For example, `__add__()` is called when the `+` operator is used with an object. 
+    * In `gradFlow`, magic methods are used to overload operators like `+`, `-`, `*`, `/`, etc., for `GradNode` objects, ensuring that the forward and backward passes are correctly handled for these operations.
+
+## **Naming Conventions:**
+
+* **Single Leading Underscore (_):** Indicates that a parameter or variable is intended for internal use only and should not be accessed directly from outside the class or module.
+* **Trailing Underscore (var_):** Used to avoid conflicts with Python keywords.
+
+## **Concept of Backprop:**
+
+* **Forward Pass:** In the forward pass, the initial values of all nodes are set, and the output of the graph is computed.
+* **Backward Pass:** 
+    * Starts from the final node of the graph. 
+    * The gradient of the final node with respect to itself is initialized to 1.
+    * At each node, the gradient is calculated using the chain rule. 
+        * For example, if node `e` is the result of `c + b`, then `c.grad()` is calculated as `e.grad() * 1.0`.
+        * If node `e` is the result of `c * b`, then `c.grad()` is calculated as `e.grad() * b`.
+        * So, essentially for a child.gradient() = parent.gradient() * $\frac{d}{dchild}parent$.
+    * The `_backward()` function within each `GradNode` stores the logic to compute the gradients of its children.
+
+## Installation
+
+```bash
+# Clone the repository
+git clone https://github.com/anantmehta33/GradFlow.git
+
+# Install dependencies (assuming you have pip installed)
+pip install -r requirements.txt
+```
+
+## **Contributing:**
+
+We welcome contributions from the community. Here's how you can contribute:
+
+1. **Fork the repository:** Create your own copy of the project on GitHub.
+2. **Make changes:** Implement new features, fix bugs, or improve existing code.
+3. **Create a pull request:** Submit a pull request to the main repository with your changes.
+
+### **Contributors:**
+
+* Ajay Jagannath
+* Anant Mehta
+
+### **Thanks:**
+
+The work of Andrej Karpathy inspired this project.
+
+## **License:**
+
+MIT License
